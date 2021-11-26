@@ -16,8 +16,16 @@ const Footer = (props) => {
 
 const Content = (props) => {
   console.log("Content component")
+  console.log(props)
   return(
-    <div>
+    <Part part={props.part} exercises={props.exercises} />
+  )
+}
+
+const Part = (props) => {
+  console.log("Part component")
+  return (
+    <div id="part">
       <p>{props.part} {props.exercises}</p>
     </div>
   )
@@ -46,9 +54,9 @@ const App = () => {
   return (
     <div>
       <Header course={course}/>
-      <Content part={part1} exercices={exercises1}/>
-      <Content part={part2} exercices={exercises2}/>
-      <Content part={part3} exercices={exercises3}/>
+      <Content part={part1} exercises={exercises1}/>
+      <Content part={part2} exercises={exercises2}/>
+      <Content part={part3} exercises={exercises3}/>
       <Total count1={exercises1} count2={exercises2} count3={exercises3}/>
       <Footer />
     </div>

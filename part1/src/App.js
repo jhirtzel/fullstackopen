@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Header = (props) => {
-  console.log("Header component")
+  console.log("HEADER COMPONENT")
   return(
     <div>
       <h1>{props.course}</h1>
@@ -10,61 +10,68 @@ const Header = (props) => {
 }
 
 const Footer = (props) => {
-  console.log("Footer component")
+  console.log("FOOTER COMPONENT")
   return(null)
 }
 
 const Content = (props) => {
-  console.log("Content component")
-  console.log(props)
-  return(
-    <Part name={props.part.name} exercises={props.part.exercises} />
+  console.log("CONTENT COMPONENT")
+  // return a Part component for each entry in the props
+  const listOfParts = props.parts.map( part => {
+    return (
+      <Part key={part.name} name={part.name} exercises={part.exercises} />
+    )}
   )
+  return([listOfParts])
 }
 
 const Part = (props) => {
-  console.log("Part component")
+  console.log("PART COMPONENT")
   console.log(props)
   return (
-    <div id="part">
+    <div id="Part">
       <p>{props.name} {props.exercises}</p>
     </div>
   )
 }
 
 const Total = (props) => {
-  console.log("Total component")
+  console.log("TOTAL COMPONENT")
+  let sumOfExercises = 0
+  props.parts.forEach( element => {
+    sumOfExercises += element.exercises
+  })
+
   return(
     <div>
-      <p>Number of exercises = {props.count}</p>
+      <p>Number of exercises = {sumOfExercises}</p>
     </div>
   )
 }
 
 const App = () => {
-  console.log("===App component===")
+  console.log("APP COMPONENT")
   const course = 'Half Stack application development'
-  const part1 = {
-    "name": 'Fundamentals of React',
-    "exercises": 10
-  }
-  const part2 = {
-    "name": 'Using props to pass data',
-    "exercises": 7
-  }
-  const part3 = {
-    "name": 'State of a component',
-    "exercises": 14
-  }
-  let sumOfExercises = part1.exercises+part2.exercises+part3.exercises
-
+  const parts = [
+    {
+      "name": 'Fundamentals of React',
+      "exercises": 10
+    },
+    {
+      "name": 'Using props to pass data',
+      "exercises": 7
+    },
+    {
+      "name": 'State of a component',
+      "exercises": 14
+    }
+  ]
+    
   return (
     <div>
       <Header course={course}/>
-      <Content part={part1}/>
-      <Content part={part2}/>
-      <Content part={part3}/>
-      <Total count={sumOfExercises}/>
+      <Content parts={parts}/>
+      <Total parts={parts}/>
       <Footer />
     </div>
   )

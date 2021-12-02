@@ -7,6 +7,17 @@ const Button = ({clickHandler, label}) => (
   <button onClick={clickHandler} >{label}</button>
 )
 
+const Stats = ({posCount, neuCount, negCount}) => {
+  return(
+    <>
+    <h1>Statistics</h1>
+    <p>Positive: {posCount}</p>
+    <p>Neutral: {neuCount}</p>
+    <p>Negative: {negCount}</p>
+    </>
+  )
+}
+
 // this component uses the {} syntax because it has multiple statements
 const History = (props) => {
   if (props.allClicks.length === 0) {
@@ -24,35 +35,30 @@ const History = (props) => {
 }
 
 const App = () => {
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-  const [allClicks, setAllClicks] = useState([])
+  const [good, setGood] = useState(0)
+  const [bad, setBad] = useState(0)
+  const [neutral, setNeutral] = useState(0)
   
   /* Event Handlers */
-  const handleLeftClick = () => {
-    setAllClicks(allClicks.concat('L'))
-    setLeft(left + 1)
+  const handlePositive = () => {
+    setGood(good + 1)
   }
 
-  const handleRightClick = () => {
-    setAllClicks(allClicks.concat('R'))
-    setRight(right + 1)
+  const handleNeutral = () => {
+    setNeutral(neutral + 1)
   }
 
-  const handleReset = () => {
-    setAllClicks(allClicks.concat('Reset'))
-    setLeft(0)
-    setRight(0)
+  const handleNegative = () => {
+    setBad(bad + 1)
   }
 
   return (
     <>
-      {left}
-      <Button label="Left" clickHandler={handleLeftClick}/>
-      <Button label="Reset" clickHandler={handleReset} />
-      <Button label="Right" clickHandler={handleRightClick}/>
-      {right}
-      <History allClicks={allClicks} />
+      <h1>Give Feedback</h1>
+      <Button label="good" clickHandler={handlePositive}/>
+      <Button label="neutral" clickHandler={handleNeutral} />
+      <Button label="bad" clickHandler={handleNegative} />
+      <Stats posCount={good} neuCount={neutral} negCount={bad}/>
     </>
   )
 }

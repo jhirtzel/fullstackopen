@@ -9,19 +9,27 @@ const Button = ({clickHandler, label}) => (
 
 const Stats = ({posCount, neuCount, negCount}) => {
   const sum = posCount + neuCount + negCount;
-  let avg = 0;
-  if (sum !== 0) avg = (posCount/(posCount+negCount))*100;     
+  if (sum === 0) {
+    return(
+      <>
+      <h1>Statistics</h1>
+      <p>No feedback received</p>
+      </>)
+  } else {
+    let avg = 0;
+    if (sum !== 0) avg = (posCount/(posCount+negCount))*100;     
 
-  return(
-    <>
-    <h1>Statistics</h1>
-    <p>Positive: {posCount}</p>
-    <p>Neutral: {neuCount}</p>
-    <p>Negative: {negCount}</p>
-    <p>Total votes: {sum}</p>
-    <p>Average: {avg}% positive</p>
-    </>
-  )
+    return(
+      <>
+      <h1>Statistics</h1>
+      <p>Positive: {posCount}</p>
+      <p>Neutral: {neuCount}</p>
+      <p>Negative: {negCount}</p>
+      <p>Total votes: {sum}</p>
+      <p>Average: {avg}% positive</p>
+      </>
+    )
+  }
 }
 
 const App = () => {

@@ -7,13 +7,17 @@ const Button = ({clickHandler, label}) => (
   <button onClick={clickHandler} >{label}</button>
 )
 
+const StatsLine = ({textPre, value, textPost}) => {
+  return(<p>{textPre}{value}{textPost}</p>)
+}
+
 const Stats = ({posCount, neuCount, negCount}) => {
   const sum = posCount + neuCount + negCount;
   if (sum === 0) {
     return(
       <>
       <h1>Statistics</h1>
-      <p>No feedback received</p>
+      <StatsLine textPre="No feedback received" />
       </>)
   } else {
     let avg = 0;
@@ -22,11 +26,11 @@ const Stats = ({posCount, neuCount, negCount}) => {
     return(
       <>
       <h1>Statistics</h1>
-      <p>Positive: {posCount}</p>
-      <p>Neutral: {neuCount}</p>
-      <p>Negative: {negCount}</p>
-      <p>Total votes: {sum}</p>
-      <p>Average: {avg}% positive</p>
+      <StatsLine textPre="Positive: " value={posCount} />
+      <StatsLine textPre="Neutral: " value={neuCount} />
+      <StatsLine textPre="Negative: " value={negCount} />
+      <StatsLine textPre="Total votes: " value={sum} />
+      <StatsLine textPre="Average: " value={avg} textPost="% positive" />
       </>
     )
   }

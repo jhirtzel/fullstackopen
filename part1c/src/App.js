@@ -1,100 +1,39 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 
-/* Components */
-// this component uses () syntax because it has a single statement (the <button> element)
-// and the return() call is implied
 const Button = ({clickHandler, label}) => (
   <button onClick={clickHandler} >{label}</button>
 )
 
-const TableCell = ({data}) => (<td>{data}</td>)
-
-// TableRow Component
-// takes an object/array of cells, and creates a TableCell for each one
-// encloses the list of cells in a table row tag
-const TableRow = ({cells}) => {
-  let row = [];
-  for (const cell of cells) {
-    row.push(<TableCell key={cell} data={cell} />);
-  }
-  return(<tr>{row}</tr>)
-}
-
-// Table Component
-// takes a rows object/array, consisting of 0 or more equal-length arrays
-// and constructs a table
-const Table = ({rows}) => {
-  let table = [];
-  for (const row of rows) {
-    table.push(<TableRow key={row[0]} cells={row}/>);
-  }
-  return(<table><tbody>{table}</tbody></table>)
-}
-
-const StatsLine = ({textPre, value, textPost}) => {
-  return(<p>{textPre}{value}{textPost}</p>)
-}
-
-const Stats = ({posCount, neuCount, negCount}) => {
-  const sum = posCount + neuCount + negCount;
-  const defaultContent = [["No feedback received"]]
-  if (sum === 0) {
-    return(
-      <>
-      <h1>Statistics</h1>
-      <Table rows={defaultContent}/>
-      </>)
-  } else {
-    let avg = 0;
-    if (sum !== 0) avg = (posCount/(posCount+negCount+(neuCount/2)))*100;   
-    const content = [
-      ["Positive",posCount],
-      ["Neutral",neuCount],
-      ["Negative",negCount],
-      ["Total Votes",sum],
-      ["Average",avg,"% positive"]
-    ]
-
-    return(
-      <>
-      <h1>Statistics</h1>
-      <Table rows={content} />
-      {/* <StatsLine textPre="Positive: " value={posCount} />
-      <StatsLine textPre="Neutral: " value={neuCount} />
-      <StatsLine textPre="Negative: " value={negCount} />
-      <StatsLine textPre="Total votes: " value={sum} />
-      <StatsLine textPre="Average: " value={avg} textPost="% positive" /> */}
-      </>
-    )
-  }
-}
-
 const App = () => {
-  const [good, setGood] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [neutral, setNeutral] = useState(0)
+  const anecdotes = [
+    'If it hurts, do it more often',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
+  ]
+   
+  const [selected, setSelected] = useState(0)
 
-  /* Event Handlers */
-  const handlePositive = () => {
-    setGood(good + 1)
-  }
+	const handleChooser = () => {
+		console.log("clicked button")
+		setSelected(getRandBetween(0, anecdotes.length));
+	}
 
-  const handleNeutral = () => {
-    setNeutral(neutral + 1)
-  }
-
-  const handleNegative = () => {
-    setBad(bad + 1)
-  }
+	function getRandBetween(min, max) {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		// return a range exclusive of the max value, to be used in array indexing
+		return Math.floor(Math.random() * (max - min) + min);
+	}
 
   return (
-    <>
-      <h1>Give Feedback</h1>
-      <Button label="good" clickHandler={handlePositive}/>
-      <Button label="neutral" clickHandler={handleNeutral} />
-      <Button label="bad" clickHandler={handleNegative} />
-      <Stats posCount={good} neuCount={neutral} negCount={bad}/>
-    </>
+    <div>
+      <p>{anecdotes[selected]}</p>
+			<Button label="next anecdote" clickHandler={handleChooser}/>
+    </div>
   )
 }
 

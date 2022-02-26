@@ -14,12 +14,24 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ]
+
+	const votelist = Array(anecdotes.length).fill(0);
+	// console.log(votelist);
    
   const [selected, setSelected] = useState(0)
+	const [votes, setVotes] = useState({...votelist})
 
 	const handleChooser = () => {
-		console.log("clicked button")
+		// console.log("clicked button")
 		setSelected(getRandBetween(0, anecdotes.length));
+	}
+
+	// state handler to increment the votes at a given index
+	function handleVotes(vote) {
+		let updVotes = {...votes};
+		updVotes[vote] += 1;
+		setVotes(updVotes);
+		return vote;
 	}
 
 	function getRandBetween(min, max) {
@@ -29,10 +41,22 @@ const App = () => {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
 
+	function getTopVote() {
+		// copy the votes so we don't mutate state
+		let sorted = {...votes};
+		// sorted.entries.sort((a,b) => a - b);
+		console.log(sorted);
+		return sorted[0];
+	}
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+			<p> index = {selected}</p>
 			<Button label="next anecdote" clickHandler={handleChooser}/>
+			<Button label="Vote for this anecdote" clickHandler={handleVotes({selected})}/>
+			<h1>Top Anecdote is</h1>
+			<p>{votes[getTopVote()]}</p>
     </div>
   )
 }

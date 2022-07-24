@@ -44,12 +44,13 @@ const App = () => {
         }
       ]
     }
-  ]
-  }
+  ]  
 
   return (
     <div>
-      <Course course={courses} />
+      { courses.map( course => 
+        <Course course={course} />
+      )}
     </div>
   )
 }

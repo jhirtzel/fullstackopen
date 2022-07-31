@@ -8,12 +8,18 @@ const App = () => {
 
 const addPerson = (event) => {
   event.preventDefault()
-  const newPerson = {
-    name: newName,
-    id: newName
-  }
 
-  setPersons(persons.concat(newPerson))
+  // don't allow duplicates to be added
+  if(persons.some(person => person.id === newName)){
+    window.alert(`${newName} is already added to phonebook`)
+  } else {
+    const newPerson = {
+      name: newName,
+      id: newName
+    }
+    setPersons(persons.concat(newPerson))
+  }
+  //clear the form after each entry
   setNewName('')
 }
 

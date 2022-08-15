@@ -8,6 +8,4 @@ const initData = [
   { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
 ]
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <App initData={initData}/>
-)
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)
